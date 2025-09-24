@@ -10,6 +10,7 @@ const TaskDetails = ({ task, onClose, onEdit, onDelete }) => {
 
   useEffect(() => {
     loadComments();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task.id]);
 
   const loadComments = async () => {

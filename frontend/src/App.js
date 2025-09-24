@@ -24,6 +24,7 @@ function App() {
   // Load tasks on component mount
   useEffect(() => {
     loadTasks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadTasks = async () => {
@@ -43,6 +44,7 @@ function App() {
   // Reload tasks when filters change
   useEffect(() => {
     loadTasks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, priorityFilter]);
 
   const handleCreateTask = async (taskData) => {

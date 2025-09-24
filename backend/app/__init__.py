@@ -27,6 +27,7 @@ def create_app():
                 "http://127.0.0.1:3000", 
                 "http://localhost:3001",
                 "https://*.onrender.com",
+                "https://*.vercel.app",
                 os.getenv('FRONTEND_URL', 'http://localhost:3000')
             ],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

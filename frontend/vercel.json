@@ -23,6 +23,7 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://task-management-backend.onrender.com/api"
+    "REACT_APP_API_URL": "https://task-management-system-k9tn.onrender.com/api",
+    "CI": "false"
   }
 }
