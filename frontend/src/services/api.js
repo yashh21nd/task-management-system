@@ -2,8 +2,14 @@ import axios from 'axios';
 
 // API Configuration - Updated for production deployment
 // Last updated: September 24, 2025
+const baseURL = process.env.REACT_APP_API_URL || 'https://task-management-system-1-cabp.onrender.com/api';
+
+// Debug: Log the API URL being used
+console.log('API Base URL:', baseURL);
+console.log('Environment API URL:', process.env.REACT_APP_API_URL);
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://task-management-system-1-cabp.onrender.com/api',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
