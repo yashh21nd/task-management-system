@@ -15,7 +15,13 @@ def create_app():
     
     # Configuration
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///task_management.db')
+    
+    # Fix PostgreSQL URL for newer versions
+    database_url = os.getenv('DATABASE_URL', 'sqlite:///task_management.db')
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Initialize extensions with app
@@ -44,7 +50,21 @@ def create_app():
     # Add a simple health check endpoint
     @app.route('/api/health')
     def health_check():
-        return {'status': 'healthy', 'message': 'Task Management API is running'}
+        try:
+            # Test database connection
+            db.session.execute('SELECT 1')
+            return {'status': 'healthy', 'message': 'Task Management API is running', 'database': 'connected'}
+        except Exception as e:
+            return {'status': 'unhealthy', 'message': 'Database connection failed', 'error': str(e)}, 500
+    
+    # Add database initialization endpoint
+    @app.route('/api/init-db')
+    def init_database():
+        try:
+            db.create_all()
+            return {'status': 'success', 'message': 'Database tables created successfully'}
+        except Exception as e:
+            return {'status': 'error', 'message': 'Failed to create database tables', 'error': str(e)}, 500
     
     # Register blueprints
     from app.routes.tasks import tasks_bp
