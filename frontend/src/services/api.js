@@ -2,11 +2,12 @@ import axios from 'axios';
 
 // API Configuration - Updated for production deployment
 // Last updated: September 24, 2025
-const baseURL = process.env.REACT_APP_API_URL || 'https://task-management-system-1-cabp.onrender.com/api';
+// FORCING CORRECT URL - TEMPORARY FIX
+const baseURL = 'https://task-management-system-1-cabp.onrender.com/api';
 
 // Debug: Log the API URL being used
 console.log('API Base URL:', baseURL);
-console.log('Environment API URL:', process.env.REACT_APP_API_URL);
+console.log('Environment API URL (ignored):', process.env.REACT_APP_API_URL);
 
 const api = axios.create({
   baseURL: baseURL,
