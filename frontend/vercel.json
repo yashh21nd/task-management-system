@@ -23,6 +23,6 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://your-backend-api.herokuapp.com/api"
+    "REACT_APP_API_URL": "https://task-management-backend.onrender.com/api"
   }
 }
