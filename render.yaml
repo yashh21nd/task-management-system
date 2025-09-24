@@ -5,7 +5,7 @@ services:
     env: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: python run.py
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 run:app
     envVars:
       - key: FLASK_ENV
         value: production

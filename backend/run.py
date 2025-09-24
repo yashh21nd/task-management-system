@@ -4,7 +4,7 @@ from app import create_app
 app = create_app()
 
 # Initialize database tables when requested
-if os.getenv('INIT_DB', 'false').lower() == 'true' or __name__ == '__main__':
+if os.getenv('INIT_DB', 'false').lower() == 'true':
     with app.app_context():
         try:
             from app import db
@@ -16,12 +16,7 @@ if os.getenv('INIT_DB', 'false').lower() == 'true' or __name__ == '__main__':
             print(f"Error creating database tables: {e}")
 
 if __name__ == '__main__':
-    print("Starting Flask server...")
+    # Only run development server when called directly
+    print("Starting Flask development server...")
     port = int(os.getenv('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
-else:
-    # For production (Gunicorn will handle this)
-    port = int(os.getenv('PORT', 10000))
-    if os.getenv('FLASK_ENV') == 'production':
-        print(f"Production server starting on port {port}")
-        app.run(debug=False, host='0.0.0.0', port=port)
