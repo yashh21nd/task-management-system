@@ -28,14 +28,20 @@ def create_app():
     # Initialize extensions with app
     db.init_app(app)
     
-    # CORS configuration
+    # CORS configuration - Custom origin checker for Vercel domains
+    def check_origin(origin):
+        allowed_origins = [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000"
+        ]
+        
+        # Allow any vercel.app domain
+        if origin and (origin.endswith('.vercel.app') or origin in allowed_origins):
+            return True
+        return False
+    
     CORS(app, 
-         origins=[
-             "http://localhost:3000",
-             "http://127.0.0.1:3000", 
-             "https://task-management-system-lovat-sigma.vercel.app",
-             "https://*.vercel.app"
-         ],
+         origins=check_origin,
          methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
          allow_headers=["Content-Type", "Authorization"],
          supports_credentials=True)
