@@ -16,8 +16,9 @@ def create_app():
     # Configuration
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
     
-    # Fix PostgreSQL URL for newer versions
+    # Use SQLite for simplicity (no PostgreSQL needed)
     database_url = os.getenv('DATABASE_URL', 'sqlite:///task_management.db')
+    # Keep the PostgreSQL fix just in case someone wants to use it later
     if database_url.startswith('postgres://'):
         database_url = database_url.replace('postgres://', 'postgresql://', 1)
     
@@ -32,7 +33,8 @@ def create_app():
                 "http://localhost:3000", 
                 "http://127.0.0.1:3000", 
                 "http://localhost:3001",
-                "https://*.onrender.com",
+                "https://task-management-system-1-cabp.onrender.com",
+                "https://task-management-system-lovat-sigma.vercel.app",
                 "https://*.vercel.app",
                 os.getenv('FRONTEND_URL', 'http://localhost:3000')
             ],
