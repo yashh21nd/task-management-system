@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-// Create axios instance with base configuration
+// API Configuration - Updated for production deployment
+// Last updated: September 24, 2025
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'https://task-management-system-1-cabp.onrender.com/api',
   headers: {
