@@ -1,0 +1,32 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: task-management-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn --bind 0.0.0.0:$PORT run:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        generateValue: true
+        type: database
+    
+  # Frontend Static Site  
+  - type: web
+    name: task-management-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          type: web
+          name: task-management-backend
+          property: host
+
+  # PostgreSQL Database
+  - type: pgsql
+    name: task-management-db
+    databaseName: taskmanagement
+    user: taskuser
