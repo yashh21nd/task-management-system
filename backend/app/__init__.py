@@ -27,22 +27,13 @@ def create_app():
     
     # Initialize extensions with app
     db.init_app(app)
-    CORS(app, resources={
-        r"/api/*": {
-            "origins": [
-                "http://localhost:3000", 
-                "http://127.0.0.1:3000", 
-                "http://localhost:3001",
-                "https://task-management-system-1-cabp.onrender.com",
-                "https://task-management-system-lovat-sigma.vercel.app",
-                "https://*.vercel.app",
-                os.getenv('FRONTEND_URL', 'http://localhost:3000')
-            ],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"],
-            "supports_credentials": True
-        }
-    })
+    
+    # More permissive CORS configuration for debugging
+    CORS(app, 
+         origins="*",  # Allow all origins for now
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         allow_headers=["Content-Type", "Authorization"],
+         supports_credentials=False)
     
     # Add basic routes for testing
     @app.route('/')

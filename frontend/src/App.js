@@ -30,12 +30,16 @@ function App() {
   const loadTasks = async () => {
     try {
       setLoading(true);
+      console.log('Loading tasks from API...');
       const response = await getTasks(statusFilter, priorityFilter);
+      console.log('API Response:', response);
       setTasks(response.data.tasks);
       setError(null);
     } catch (error) {
-      console.error('Error loading tasks:', error);
-      setError('Failed to load tasks. Please try again.');
+      console.error('Error loading tasks - Full error:', error);
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+      setError(`Failed to load tasks: ${error.message}. Please try again.`);
     } finally {
       setLoading(false);
     }

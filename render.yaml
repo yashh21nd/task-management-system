@@ -28,9 +28,4 @@ services:
           type: web
           name: task-management-backend
           property: host
-
-  # PostgreSQL Database
-  - type: pgsql
-    name: task-management-db
-    databaseName: taskmanagement
     user: taskuser
