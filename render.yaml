@@ -3,14 +3,18 @@ services:
   - type: web
     name: task-management-backend
     env: python
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && gunicorn --bind 0.0.0.0:$PORT run:app
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: python run.py
     envVars:
       - key: FLASK_ENV
         value: production
-      - key: DATABASE_URL
+      - key: SECRET_KEY
         generateValue: true
-        type: database
+      - key: PORT
+        value: 10000
+      - key: INIT_DB
+        value: true
     
   # Frontend Static Site  
   - type: web
