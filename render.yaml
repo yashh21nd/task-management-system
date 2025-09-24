@@ -4,8 +4,8 @@ services:
     name: task-management-backend
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 run:app
+    buildCommand: pip install -r requirements.txt && python -c "from app import create_app; from app import db; from app.models.task import Task; from app.models.comment import Comment; app = create_app(); app.app_context().push(); db.create_all(); print('Database initialized')"
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 run:app
     envVars:
       - key: FLASK_ENV
         value: production
@@ -13,8 +13,6 @@ services:
         generateValue: true
       - key: PORT
         value: 10000
-      - key: INIT_DB
-        value: true
     
   # Frontend Static Site  
   - type: web

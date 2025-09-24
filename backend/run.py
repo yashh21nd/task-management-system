@@ -1,10 +1,14 @@
 import os
 from app import create_app
 
+# Create the Flask app
 app = create_app()
 
-# Initialize database tables when requested
-if os.getenv('INIT_DB', 'false').lower() == 'true':
+if __name__ == '__main__':
+    # Only run when called directly (development mode)
+    print("Starting Flask development server...")
+    
+    # Initialize database in development
     with app.app_context():
         try:
             from app import db
@@ -14,9 +18,6 @@ if os.getenv('INIT_DB', 'false').lower() == 'true':
             print("Database tables created successfully!")
         except Exception as e:
             print(f"Error creating database tables: {e}")
-
-if __name__ == '__main__':
-    # Only run development server when called directly
-    print("Starting Flask development server...")
+    
     port = int(os.getenv('PORT', 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
